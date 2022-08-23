@@ -1,0 +1,26 @@
+### Groovy ###
+
+user.gradle
+.gradle/
+target/
+build/
+out/
+
+*.DS_Store
+*.class
+*.swp
+*~
+
+.idea
+*.iml
+*.ipr
+*.iws
+.shelf
+
+.settings/
+.classpath
+.project
+bin/
+
+
+# End

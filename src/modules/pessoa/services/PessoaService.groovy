@@ -1,4 +1,4 @@
-package modules.pessoa.services.Pessoa
+package modules.pessoa.services
 
 import modules.pessoa.models.PessoaFisica
 import modules.pessoa.models.PessoaJuridica

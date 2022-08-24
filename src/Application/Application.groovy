@@ -3,7 +3,7 @@ package Application
 
 import modules.pessoa.models.PessoaFisica
 import modules.pessoa.models.PessoaJuridica
-import modules.pessoa.services.Pessoa.PessoaService
+import modules.pessoa.services.PessoaService
 import services.PrintAndGetService
 
 class Application {

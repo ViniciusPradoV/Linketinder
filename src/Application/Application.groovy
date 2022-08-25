@@ -1,9 +1,10 @@
 package Application
 
-
+import modules.match.services.MatchService
 import modules.pessoa.models.PessoaFisica
 import modules.pessoa.models.PessoaJuridica
 import modules.pessoa.services.PessoaService
+import modules.vaga.services.VagaService
 import services.PrintAndGetService
 
 class Application {
@@ -23,6 +24,8 @@ class Application {
                     "2 - Cadastrar como empresa\n" +
                     "3 - Listar candidatos\n" +
                     "4 - Listar empresas\n" +
+                    "5 - Listar matches\n" +
+                    "6 - Fazer match\n" +
                     "0 - Sair")
 
             switch (userSelection) {
@@ -42,13 +45,24 @@ class Application {
                     PessoaService.listarEmpresas(listaEmpresas)
                     continueLoop = true;
                 }
+                case "5" -> {
+                    MatchService.listarMatches(listaEmpresas)
+                    continueLoop = true;
+                }
+                case "6" -> {
+                    MatchService.fazerMatch(listaEmpresas, listaCandidatos)
+                    continueLoop = true;
+                }
+                case "7" -> {
+                    MatchService.getAllMatches(listaEmpresas)
+                    continueLoop = true;
+                }
                 case "0" -> continueLoop = false;
                 default -> {
                     println("Nenhuma opcao valida foi selecionada")
                     continueLoop = true
                 };
             }
-
         }
     }
 }

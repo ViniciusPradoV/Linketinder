@@ -2,12 +2,19 @@ package modules.pessoa.services
 
 import modules.pessoa.models.PessoaFisica
 import modules.pessoa.models.PessoaJuridica
-import modules.vaga.services.VagaService
+import modules.vaga.services.IVagaService
 import services.PrintAndGetService
 
 class PessoaService {
 
-     static List<PessoaJuridica> getEmpresas(){
+
+    static IVagaService vagaService
+
+    PessoaService(IVagaService vagaService) {
+        this.vagaService = vagaService
+    }
+
+    static List<PessoaJuridica> getEmpresas(){
 
         List<PessoaJuridica> listaEmpresas = [
                 new PessoaJuridica(1,1,"FromSoftware", "fkaokdfo@email.com", "SP", "11111-111", "Fazemos software", "1111111111",[]),
@@ -17,7 +24,7 @@ class PessoaService {
                 new PessoaJuridica(5,5,"FSoftware", "fkaokdfo@email.com", "PB", "11111-111", "Fazemos software", "11111111SS11",[]),
         ]
 
-         listaEmpresas.forEach{it.vagas = VagaService.getVagas(it.uid)}
+         listaEmpresas.forEach{it.vagas = vagaService.getVagas(it.uid)}
 
 
          return listaEmpresas
@@ -38,8 +45,13 @@ class PessoaService {
 
     }
 
-    static PessoaFisica cadastrarCandidato(List<PessoaFisica> listaCandidatos) {
+    static PessoaFisica cadastrarCandidato(int uid, int idade, String nome, String email, String estado, String cep, String descricao, String cpf, String competencias) {
 
+        return new PessoaFisica(uid, idade, nome, email, estado, cep, descricao, cpf, competencias.split(',').toList(), [])
+
+    }
+
+    static List recolheDadosCandidato(List<PessoaFisica> listaCandidatos) {
         int uid = listaCandidatos.size() + 1
 
         int idade = Integer.parseInt(PrintAndGetService.printAndGet("Digite sua idade:\n"))
@@ -51,12 +63,16 @@ class PessoaService {
         String cpf = PrintAndGetService.printAndGet("Digite seu CPF: ")
         String competencias = PrintAndGetService.printAndGet("Digite suas competencias separadas por virgula: \n")
 
-        return new PessoaFisica(uid, idade, nome, email, estado, cep, descricao, cpf, competencias.split(',').toList(), [])
+        return [uid, idade, nome, email, estado, cep, descricao, cpf, competencias]
+    }
+
+    static PessoaJuridica cadastrarEmpresa(int uid, String nome, String email, String estado, String cep, String descricao, String cnpj) {
+
+        return new PessoaJuridica(uid, nome, email, estado, cep, descricao, cnpj,vagaService.getVagas(uid), [])
 
     }
 
-    static PessoaJuridica cadastrarEmpresa(List<PessoaJuridica> listaEmpresas) {
-
+     static List recolheDadosEmpresa(List<PessoaJuridica> listaEmpresas) {
         int uid = listaEmpresas.size() + 1
 
         String nome = PrintAndGetService.printAndGet("Digite o nome da empresa:\n")
@@ -65,8 +81,7 @@ class PessoaService {
         String cep = PrintAndGetService.printAndGet("Digite o seu CEP atual:\n")
         String descricao = PrintAndGetService.printAndGet("Digite uma descricao para o perfil da empresa:\n")
         String cnpj = PrintAndGetService.printAndGet("Digite seu CNPJ: ")
-
-        return new PessoaJuridica(uid, nome, email, estado, cep, descricao, cnpj, VagaService.getVagas(uid), [])
+        return [uid, nome, email, estado, cep, descricao, cnpj]
     }
 
     static def void listarCandidatos(List<PessoaFisica> listaCandidatos) {

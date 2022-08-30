@@ -17,5 +17,4 @@ class PessoaFisica extends Pessoa{
         this.matches = matches
     }
 
-
 }

@@ -30,11 +30,15 @@ class Application {
 
             switch (userSelection) {
                 case "1"-> {
-                    listaCandidatos.add(PessoaService.cadastrarCandidato(listaCandidatos))
+                    def(uid, idade, nome, email, estado, cep, descricao, cpf, competencias) =
+                    PessoaService.recolheDadosCandidato(listaCandidatos)
+                    listaCandidatos.add(PessoaService.cadastrarCandidato(uid, idade, nome, email, estado, cep, descricao, cpf, competencias))
                     continueLoop = true;
                 }
                 case "2" -> {
-                    listaEmpresas.add(PessoaService.cadastrarEmpresa(listaEmpresas))
+                    def(uid, nome, email, estado, cep, descricao, cnpj) =
+                    PessoaService.recolheDadosEmpresa(listaEmpresas)
+                    listaEmpresas.add(PessoaService.cadastrarEmpresa(uid, nome, email, estado, cep, descricao, cnpj))
                     continueLoop = true;
                 }
                 case "3" -> {

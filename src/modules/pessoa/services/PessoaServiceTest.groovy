@@ -3,10 +3,8 @@ package modules.pessoa.services
 import modules.pessoa.models.PessoaFisica
 import modules.pessoa.models.PessoaJuridica
 import modules.vaga.mocks.MockVagaService
-import modules.vaga.services.IVagaService
-import org.junit.Ignore
-import org.junit.Test
 import org.junit.Assert
+import org.junit.Test
 
 class PessoaServiceTest {
 
@@ -62,8 +60,8 @@ class PessoaServiceTest {
                 "11111-111",
                 "Desenvolvemos software",
                 "11111111",
-        [],
-        [])
+                [],
+                [])
 
         Assert.assertEquals(objetoComparacao.toString(), empresaTeste.toString())
     }
